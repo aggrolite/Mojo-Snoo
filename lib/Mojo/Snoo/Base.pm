@@ -31,3 +31,21 @@ sub _monkey_patch {
 }
 
 1;
+
+__END__
+
+=head NAME
+
+Mojo::Snoo::Base - Reddit API base class for Mojo::Snoo modules
+
+=head DESCRIPTION
+
+Mojo::Snoo modules inherit from Mojo::Snoo::Base.
+
+=head AUTHOR
+
+Curtis Brandt <curtis@cpan.org>
+
+=head LICENSE
+
+???
