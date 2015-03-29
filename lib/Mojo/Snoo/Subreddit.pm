@@ -6,9 +6,9 @@ use Mojo::Snoo::Thing;
 use Mojo::Util qw(monkey_patch);
 
 has 'name';
-has about => \&_build_about;
+has about  => \&_build_about;
 has things => \&_build_things;
-has mods => \&_build_mods;
+has mods   => \&_build_mods;
 
 sub _build_mods {
     my $self = shift;
@@ -44,18 +44,18 @@ sub _build_things {
       map { $_->{kind} eq 't3' ? $_->{data} : () }    #
       @{ $json->{data}{children} };
 
-    my @things;
-    for my $child (@children) {
-        my %thing;
-        $thing{author} = $child->{author};
-        $thing{url}    = $child->{url};
-        $thing{title}  = $child->{title};
-
-	push @things, Mojo::Snoo::Thing->new(%thing);
-    }
-    use Data::Dumper 'Dumper';
-    #say Dumper \@things;
+    my @things = Mojo::Snoo::Thing->new(%$_) for @children;
     Mojo::Collection->new(@things);
 }
 
 1;
+
+__END__
+
+=head NAME
+
+Mojo::Snoo::Subreddit - Interact with subreddits via the Reddit API
+
+=head SYNOPSIS
+
+=head DESCRIPTION
