@@ -5,17 +5,8 @@ use Mojo::Collection;
 use Mojo::Snoo::Thing;
 
 has 'name';
-has about               => \&_build_about;
-has mods                => \&_build_mods;
-has things              => \&_build_things;
-has things_hot          => \&_build_things;
-has things_new          => \&_build_things_new;
-has things_rising       => \&_build_things_rising;
-has things_contro       => \&_build_things_contro;
-has things_contro_today => \&_build_things_contro;
-has things_contro_week  => \&_build_things_contro_week;
-has things_contro_month => \&_build_things_contro_month;
-has things_contro_all   => \&_build_things_contro_all;
+has about => \&_build_about;
+has mods  => \&_build_mods;
 
 sub _build_mods {
     my $self = shift;
@@ -41,11 +32,16 @@ sub _build_about {
 }
 
 sub _get_things {
-    my ( $self, $sort, $time ) = @_;
+    my ( $self, $limit, $sort, $time ) = @_;
     my $path = '/r/' . $self->name;
     $path .= "/$sort" if $sort;
 
-    my $json = $self->_get( $path, ( $time ? ( t => $time ) : () ) );
+    my %params;
+
+    $params{t}     = $time  if $time;
+    $params{limit} = $limit if $limit;
+
+    my $json = $self->_get( $path, %params );
 
     my @children =
       map { $_->{kind} eq 't3' ? $_->{data} : () }    #
@@ -55,13 +51,13 @@ sub _get_things {
     Mojo::Collection->new(@things);
 }
 
-sub _build_things              { shift->_get_things() }
-sub _build_things_new          { shift->_get_things('new') }
-sub _build_things_rising       { shift->_get_things('rising') }
-sub _build_things_contro       { shift->_get_things('controversial') }
-sub _build_things_contro_week  { shift->_get_things( 'controversial', 'week' ) }
-sub _build_things_contro_month { shift->_get_things( 'controversial', 'month' ) }
-sub _build_things_contro_all   { shift->_get_things( 'controversial', 'all' ) }
+sub things              { shift->_get_things(shift) }
+sub things_new          { shift->_get_things(shift, 'new') }
+sub things_rising       { shift->_get_things(shift, 'rising') }
+sub things_contro       { shift->_get_things(shift, 'controversial') }
+sub things_contro_week  { shift->_get_things(shift,  'controversial', 'week' ) }
+sub things_contro_month { shift->_get_things(shift,  'controversial', 'month' ) }
+sub things_contro_all   { shift->_get_things(shift,  'controversial', 'all' ) }
 
 1;
 
