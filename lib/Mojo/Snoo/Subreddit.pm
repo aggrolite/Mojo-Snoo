@@ -44,7 +44,7 @@ sub _build_things {
       map { $_->{kind} eq 't3' ? $_->{data} : () }    #
       @{ $json->{data}{children} };
 
-    my @things = Mojo::Snoo::Thing->new(%$_) for @children;
+    my @things = map Mojo::Snoo::Thing->new(%$_), @children;
     Mojo::Collection->new(@things);
 }
 
