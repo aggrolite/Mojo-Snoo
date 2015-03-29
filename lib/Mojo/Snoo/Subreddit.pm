@@ -60,8 +60,8 @@ sub _build_things_new          { shift->_get_things('new') }
 sub _build_things_rising       { shift->_get_things('rising') }
 sub _build_things_contro       { shift->_get_things('controversial') }
 sub _build_things_contro_week  { shift->_get_things( 'controversial', 'week' ) }
-sub _build_things_contro_month { shift->_get_things( 'controversial', 'week' ) }
-sub _build_things_contro_all   { shift->_get_things( 'controversial', 'week' ) }
+sub _build_things_contro_month { shift->_get_things( 'controversial', 'month' ) }
+sub _build_things_contro_all   { shift->_get_things( 'controversial', 'all' ) }
 
 1;
 
