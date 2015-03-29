@@ -60,8 +60,8 @@ scripts, and full-blown applications!
     # get only self posts
     @selfies = $sub->things->grep( sub { $_->is_self } );
 
-    # get 100 new posts ("things") from /r/Perl
-    @things = $sub->things_new(100);
+    # get the top 3 controversial posts ("things") on /r/AskReddit
+    @things = $sub->things_contro_all(3);
 
     # print the /r/Perl subreddit description
     say Mojo::Snoo->new->subreddit('Perl')->about->description;
