@@ -63,6 +63,9 @@ scripts, and full-blown applications!
     # get the top 3 controversial posts ("things") on /r/AskReddit
     @things = $sub->things_contro_all(3);
 
+    # print past week's top video URLs from /r/videos
+    $sub->things_top_week->each( sub { say $_->url } );
+
     # print the /r/Perl subreddit description
     say Mojo::Snoo->new->subreddit('Perl')->about->description;
 

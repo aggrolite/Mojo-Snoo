@@ -58,6 +58,10 @@ sub things_contro       { shift->_get_things(shift, 'controversial') }
 sub things_contro_week  { shift->_get_things(shift,  'controversial', 'week' ) }
 sub things_contro_month { shift->_get_things(shift,  'controversial', 'month' ) }
 sub things_contro_all   { shift->_get_things(shift,  'controversial', 'all' ) }
+sub things_top          { shift->_get_things( shift, 'top' ) }
+sub things_top_week     { shift->_get_things( shift, 'top', 'week' ) }
+sub things_top_month    { shift->_get_things( shift, 'top', 'month' ) }
+sub things_top_all      { shift->_get_things( shift, 'top', 'all' ) }
 
 1;
 
