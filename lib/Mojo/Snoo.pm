@@ -6,6 +6,8 @@ use Mojo::Snoo::Subreddit;
 use Mojo::Snoo::Thing;
 use Mojo::Snoo::User;
 
+our $VERSION = '0.01';
+
 sub multisubreddit {
     shift->_create_object('Mojo::Snoo::Multireddit', @_);
 }

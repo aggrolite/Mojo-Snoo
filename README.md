@@ -4,11 +4,12 @@ Mojo::Snoo - Mojo wrapper for the Reddit API
 
 # DESCRIPTION
 
-Mojo::Snoo is a Perl wrapper for the Reddit API which
-relies heavily on the Mojo modules. Mojo::Collection
+[Mojo::Snoo](https://metacpan.org/pod/Mojo::Snoo) is a Perl wrapper for the Reddit API which
+relies heavily on the Mojo modules. [Mojo::Collection](https://metacpan.org/pod/Mojo::Collection)
 was the initial inspiration for going the Mojo route.
-Skip to SYNOPSIS to see how Mojo::Snoo> can be great
-for one-liners, quick scripts, and full-blown applications!
+Skip to [synopsis](https://metacpan.org/pod/Mojo::Snoo#SYNOPSIS) to see how
+[Mojo::Snoo](https://metacpan.org/pod/Mojo::Snoo) can be great for one-liners, quick
+scripts, and full-blown applications!
 
 # SYNOPSIS
 
@@ -41,3 +42,7 @@ for one-liners, quick scripts, and full-blown applications!
 
     # get the /r/Perl header image!
     say Mojo::Snoo->new->subreddit('Perl')->about->header_img;
+
+# LICENSE
+
+Simplified BSD license. See LICENSE for details.

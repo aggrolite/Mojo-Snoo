@@ -1,2 +1,5 @@
 *.sw?
 client.pl
+/.build
+!META.json
+/Mojo-Snoo-*
