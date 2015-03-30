@@ -21,7 +21,7 @@ for one-liners, quick scripts, and full-blown applications!
     $sub = Mojo::Snoo::Subreddit->new('Perl');
 
     # print names of moderators from /r/Perl
-    say $sub->mods->each( sub { say $_->name } );
+    $sub->mods->each( sub { say $_->name } );
 
     # print title and author of each post (or "thing") from /r/Perl
     # returns 25 "hot" posts by default
