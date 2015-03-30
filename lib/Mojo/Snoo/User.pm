@@ -1,3 +1,4 @@
+package Mojo::Snoo::User;
 use Mojo::Base 'Mojo::Snoo::Base';
 
 use Mojo::Collection;
