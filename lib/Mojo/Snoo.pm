@@ -71,3 +71,7 @@ scripts, and full-blown applications!
 
     # get the /r/Perl header image!
     say Mojo::Snoo->new->subreddit('Perl')->about->header_img;
+
+=head1 LICENSE
+
+Simplified BSD license. See LICENSE for details.

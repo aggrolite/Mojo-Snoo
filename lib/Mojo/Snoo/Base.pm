@@ -52,7 +52,3 @@ Mojo::Snoo modules inherit from Mojo::Snoo::Base.
 =head AUTHOR
 
 Curtis Brandt <curtis@cpan.org>
-
-=head LICENSE
-
-???
