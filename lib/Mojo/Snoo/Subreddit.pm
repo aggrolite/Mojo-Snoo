@@ -8,6 +8,15 @@ has 'name';
 has about => \&_build_about;
 has mods  => \&_build_mods;
 
+sub new {
+    my ($class, $name) = @_;
+    Carp::croak 'Subreddit name must be provided!' unless defined $name;
+
+    my $self = bless({}, $class);
+    $self->name($name);
+    $self;
+}
+
 sub _build_mods {
     my $self = shift;
     my $json = $self->_get('/r/'.$self->name.'/about/moderators');

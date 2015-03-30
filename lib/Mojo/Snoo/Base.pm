@@ -5,6 +5,8 @@ use Mojo::UserAgent;
 use Mojo::URL;
 use Mojo::Util ();
 
+use Carp ();
+
 has base_url => 'http://www.reddit.com';
 
 sub _get {
@@ -18,8 +20,8 @@ sub _get {
 }
 
 sub _create_object {
-    my ($self, $class) = @_;
-    $class->new(@_);
+    my ($self, $class, @args) = @_;
+    $class->new(@args);
 }
 
 sub _monkey_patch {

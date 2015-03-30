@@ -11,7 +11,7 @@ sub multisubreddit {
 }
 
 sub subreddit {
-    shift->_create_object('Mojo::Snoo::Subreddit', name => shift);
+    shift->_create_object('Mojo::Snoo::Subreddit', @_);
 }
 
 sub thing {
