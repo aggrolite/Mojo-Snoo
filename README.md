@@ -4,12 +4,11 @@ Mojo::Snoo - Mojo wrapper for the Reddit API
 
 # DESCRIPTION
 
-L<Mojo::Snoo> is a Perl wrapper for the Reddit API which
-relies heavily on the Mojo modules. L<Mojo::Collection>
+Mojo::Snoo is a Perl wrapper for the Reddit API which
+relies heavily on the Mojo modules. Mojo::Collection
 was the initial inspiration for going the Mojo route.
-Skip to L<synopsis|Mojo::Snoo/SYNOPSIS> to see how
-L<Mojo::Snoo> can be great for one-liners, quick
-scripts, and full-blown applications!
+Skip to SYNOPSIS to see how Mojo::Snoo> can be great
+for one-liners, quick scripts, and full-blown applications!
 
 # SYNOPSIS
 
