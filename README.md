@@ -45,4 +45,4 @@ scripts, and full-blown applications!
 
 # LICENSE
 
-Simplified BSD license. See LICENSE for details.
+The (two-clause) FreeBSD License. See LICENSE for details.
