@@ -1,5 +1,5 @@
 package Mojo::Snoo::Base;
-use Mojo::Base -base;
+use Moo;
 
 use Mojo::UserAgent;
 use Mojo::URL;
@@ -7,7 +7,7 @@ use Mojo::Util ();
 
 use Carp ();
 
-has base_url => 'http://www.reddit.com';
+has base_url => (is => 'rw', default => 'http://www.reddit.com');
 
 sub _get {
     my ( $self, $path, %params ) = @_;

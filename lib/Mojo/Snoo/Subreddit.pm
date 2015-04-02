@@ -1,21 +1,27 @@
 package Mojo::Snoo::Subreddit;
-use Mojo::Base 'Mojo::Snoo::Base';
+#use Mojo::Base 'Mojo::Snoo::Base';
+use Moo;
+
+extends 'Mojo::Snoo::Base';
 
 use Mojo::Collection;
 use Mojo::Snoo::Thing;
 
-has 'name';
-has about => \&_build_about;
-has mods  => \&_build_mods;
+has name => (
+    is  => 'ro',
+    isa => sub {
+        die "Subreddit needs a name!" unless $_[0];
+    },
+    required => 1
+);
 
-sub new {
-    my ($class, $name) = @_;
-    Carp::croak 'Subreddit name must be provided!' unless defined $name;
+has about => (is => 'ro', lazy => 1, builder => '_build_about');
+has mods  => (is => 'ro', lazy => 1, builder => '_build_mods');
 
-    my $self = bless({}, $class);
-    $self->name($name);
-    $self;
-}
+sub BUILDARGS {
+    my ($class, @args) = @_;
+    @args > 1 ? { @args } : { name => shift @args };
+};
 
 sub _build_mods {
     my $self = shift;

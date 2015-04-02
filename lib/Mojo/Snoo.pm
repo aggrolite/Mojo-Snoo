@@ -1,5 +1,7 @@
 package Mojo::Snoo;
-use Mojo::Base 'Mojo::Snoo::Base';
+use Moo;
+
+extends 'Mojo::Snoo::Base';
 
 use Mojo::Snoo::Multireddit;
 use Mojo::Snoo::Subreddit;
@@ -8,16 +10,18 @@ use Mojo::Snoo::User;
 
 our $VERSION = '0.01';
 
+has content => (is => 'rw');
+
 sub multisubreddit {
     shift->_create_object('Mojo::Snoo::Multireddit', @_);
 }
 
 sub subreddit {
-    shift->_create_object('Mojo::Snoo::Subreddit', @_);
+    shift->_create_object('Mojo::Snoo::Subreddit', 'name', @_);
 }
 
 sub thing {
-    shift->_create_object('Mojo::Snoo::Thing', @_);
+    shift->_create_object('Mojo::Snoo::Thing', 'id', @_);
 }
 
 sub user {
