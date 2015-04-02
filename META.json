@@ -34,6 +34,18 @@
             "Dist::Milla" : "v1.0.14",
             "Test::Pod" : "1.41"
          }
+      },
+      "runtime" : {
+         "requires" : {
+            "Mojolicious" : "0",
+            "Moo" : "0"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Test::More" : "0",
+            "Test::Pod" : "0"
+         }
       }
    },
    "release_status" : "stable",
