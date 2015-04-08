@@ -18,6 +18,7 @@ has name => (
 has about => (is => 'ro', lazy => 1, builder => '_build_about');
 has mods  => (is => 'ro', lazy => 1, builder => '_build_mods');
 
+# let the user call the constructor using new($sub) or new(name => $sub)
 sub BUILDARGS {
     my ($class, @args) = @_;
     @args > 1 ? { @args } : { name => shift @args };
@@ -84,10 +85,10 @@ sub things_top_all      { shift->_get_things( shift, 'top',           'all' ) }
 
 __END__
 
-=head NAME
+=head1 NAME
 
 Mojo::Snoo::Subreddit - Interact with subreddits via the Reddit API
 
-=head SYNOPSIS
+=head1 SYNOPSIS
 
-=head DESCRIPTION
+=head1 DESCRIPTION

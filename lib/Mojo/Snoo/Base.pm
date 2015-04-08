@@ -41,14 +41,14 @@ sub _monkey_patch {
 
 __END__
 
-=head NAME
+=head1 NAME
 
 Mojo::Snoo::Base - Reddit API base class for Mojo::Snoo modules
 
-=head DESCRIPTION
+=head1 DESCRIPTION
 
 Mojo::Snoo modules inherit from Mojo::Snoo::Base.
 
-=head AUTHOR
+=head1 AUTHOR
 
 Curtis Brandt <curtis@cpan.org>
