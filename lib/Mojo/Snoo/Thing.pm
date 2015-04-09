@@ -4,57 +4,10 @@ use Moo;
 extends 'Mojo::Snoo::Base';
 
 use Mojo::Collection;
+use Mojo::Snoo::Comment;
 
-has id => (is => 'ro');
-
-has title => (
-    is      => 'rw',
-    #handles => {
-        #approved_by
-        #  archived
-        #  author
-        #  author_flair_css_class
-        #  author_flair_text
-        #  banned_by
-        #  clicked
-        #  created
-        #  created_utc
-        #  distinguished
-        #  domain
-        #  downs
-        #  edited
-        #  gilded
-        #  hidden
-        #  is_self
-        #  likes
-        #  link_flair_css_class
-        #  link_flair_text
-        #  media
-        #  media_embed
-        #  mod_reports
-        #  name
-        #  num_comments
-        #  num_reports
-        #  over_18
-        #  permalink
-        #  report_reasons
-        #  saved
-        #  score
-        #  secure_media
-        #  secure_media_embed
-        #  selftext
-        #  selftext_html
-        #  stickied
-        #  subreddit
-        #  subreddit_id
-        #  thumbnail
-        #title => 'title',
-        #  ups
-        #  url
-        #  user_reports
-        #  visited
-        #},
-);
+has [qw( id title subreddit )] => (is => 'ro');
+#has subreddit => (is => 'ro');
 
 # TODO buildargs for user direct call
 
@@ -92,27 +45,31 @@ sub BUILDARGS {
 sub _get_comments {
     my ( $self, $sort ) = @_;
 
-    unless ($self->content) {
-        warn 'no content, getting address';
-        my $path = '/r/' . $self->id;
-        $path .= "/$sort" if $sort;
+    my $path = '/r/' . $self->subreddit . '/comments/' . $self->id;
+    #$path .= "/$sort" if $sort;
 
-        my %params;
+    my %params;
+    $params{sort} = $sort if $sort;
 
-        $params{sort} = $sort if $sort;
-
-        $self->_get( $path, %params );
-    }
+    my $json = $self->_get( $path, %params );
 
     my @children =
-      map { $_->{kind} eq 't3' ? $_->{data} : () }    #
-      @{ $self->content->{data}{children} };
+      map { $_->{kind} eq 't1' ? $_->{data} : () }
+      map { @{$_->{data}{children}} }
+      @$json;
 
-    my @things = map Mojo::Snoo::Thing->new(%$_), @children;
+    my @things = map Mojo::Snoo::Comment->new(%$_), @children;
     Mojo::Collection->new(@things);
 }
 
-sub comments { shift->_get_comments(shift) };
+# comments_hot
+# comments_new
+# comments_top('
+# $thing->comments($sort);
+# defaults to comments_hot?
+# TODO pass params:
+# http://www.reddit.com/dev/api#GET_comments_{article}
+sub comments { shift->_get_comments };
 
 sub save {};
 
