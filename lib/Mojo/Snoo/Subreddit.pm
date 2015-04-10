@@ -1,5 +1,4 @@
 package Mojo::Snoo::Subreddit;
-#use Mojo::Base 'Mojo::Snoo::Base';
 use Moo;
 
 extends 'Mojo::Snoo::Base';

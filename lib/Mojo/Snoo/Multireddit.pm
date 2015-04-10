@@ -1,12 +1,24 @@
 package Mojo::Snoo::Multireddit;
+use Moo;
 
-use Mojo::Base 'Mojo::Snoo::Base';
+extends 'Mojo::Snoo::Base';
 
 use Mojo::Collection;
 use Mojo::Snoo::Subreddit;
 
-has 'name';
-has subreddits => \&_build_things;
+has name => (
+    is  => 'ro',
+    isa => sub {
+        die "Multireddit needs a name!" unless $_[0];
+    },
+    required => 1
+);
+
+# let the user call the constructor using new($multi) or new(name => $multi)
+sub BUILDARGS {
+    my ($class, @args) = @_;
+    @args > 1 ? { @args } : { name => shift @args };
+};
 
 # fetch things
 # create new thing objects

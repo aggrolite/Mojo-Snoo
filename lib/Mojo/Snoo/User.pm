@@ -1,15 +1,22 @@
 package Mojo::Snoo::User;
-use Mojo::Base 'Mojo::Snoo::Base';
+use Moo;
+
+extends 'Mojo::Snoo::Base';
 
 use Mojo::Collection;
 
-has 'name';
-has subreddits => \&_build_things;
+has name => (
+    is  => 'ro',
+    isa => sub {
+        die "User needs a name!" unless $_[0];
+    },
+    required => 1
+);
 
-# fetch things
-# create new thing objects
-# TODO pass params
-sub _build_subreddits {
-}
+# let the user call the constructor using new($name) or new(name => $name)
+sub BUILDARGS {
+    my ($class, @args) = @_;
+    @args > 1 ? { @args } : { name => shift @args };
+};
 
 1;
