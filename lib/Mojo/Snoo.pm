@@ -6,22 +6,27 @@ extends 'Mojo::Snoo::Base';
 use Mojo::Snoo::Multireddit;
 use Mojo::Snoo::Subreddit;
 use Mojo::Snoo::Thing;
+use Mojo::Snoo::Comment;
 use Mojo::Snoo::User;
 
 our $VERSION = '0.01';
 
 has content => (is => 'rw');
 
-sub multisubreddit {
+sub multireddit {
     shift->_create_object('Mojo::Snoo::Multireddit', @_);
 }
 
 sub subreddit {
-    shift->_create_object('Mojo::Snoo::Subreddit', 'name', @_);
+    shift->_create_object('Mojo::Snoo::Subreddit', @_);
 }
 
 sub thing {
-    shift->_create_object('Mojo::Snoo::Thing', 'id', @_);
+    shift->_create_object('Mojo::Snoo::Thing', @_);
+}
+
+sub comment {
+    shift->_create_object('Mojo::Snoo::Comment', @_);
 }
 
 sub user {
