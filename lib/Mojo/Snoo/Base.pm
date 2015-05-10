@@ -10,9 +10,9 @@ use Carp ();
 has base_url => (is => 'rw', default => 'http://www.reddit.com');
 
 sub _get {
-    my ( $self, $path, %params ) = @_;
+    my ($self, $path, %params) = @_;
 
-    my $url = Mojo::URL->new( $self->base_url );
+    my $url = Mojo::URL->new($self->base_url);
     $url->path("$path.json");
     $url->query(%params) if %params;
 

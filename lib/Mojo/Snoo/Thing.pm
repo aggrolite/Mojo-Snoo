@@ -7,6 +7,7 @@ use Mojo::Collection;
 use Mojo::Snoo::Comment;
 
 has [qw( id title subreddit )] => (is => 'ro');
+
 #has subreddit => (is => 'ro');
 
 # TODO buildargs for user direct call
@@ -20,8 +21,8 @@ has [qw( id title subreddit )] => (is => 'ro');
 # then build comments
 sub BUILDARGS {
     my ($class, @args) = @_;
-    @args > 1 ? { @args } : { id => shift @args };
-};
+    @args > 1 ? {@args} : {id => shift @args};
+}
 
 #has comments => \&_build_comments;
 
@@ -43,20 +44,20 @@ sub BUILDARGS {
 #}
 
 sub _get_comments {
-    my ( $self, $sort ) = @_;
+    my ($self, $sort) = @_;
 
     my $path = '/r/' . $self->subreddit . '/comments/' . $self->id;
+
     #$path .= "/$sort" if $sort;
 
     my %params;
     $params{sort} = $sort if $sort;
 
-    my $json = $self->_get( $path, %params );
+    my $json = $self->_get($path, %params);
 
     my @children =
       map { $_->{kind} eq 't1' ? $_->{data} : () }
-      map { @{$_->{data}{children}} }
-      @$json;
+      map { @{$_->{data}{children}} } @$json;
 
     my @things = map Mojo::Snoo::Comment->new(%$_), @children;
     Mojo::Collection->new(@things);
@@ -69,8 +70,8 @@ sub _get_comments {
 # defaults to comments_hot?
 # TODO pass params:
 # http://www.reddit.com/dev/api#GET_comments_{article}
-sub comments { shift->_get_comments };
+sub comments { shift->_get_comments }
 
-sub save {};
+sub save { }
 
 1;

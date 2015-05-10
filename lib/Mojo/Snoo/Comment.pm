@@ -23,8 +23,8 @@ has replies => (
 # let the user call the constructor using new($sub) or new(name => $sub)
 sub BUILDARGS {
     my ($class, @args) = @_;
-    @args > 1 ? { @args } : { id => shift @args };
-};
+    @args > 1 ? {@args} : {id => shift @args};
+}
 
 1;
 
