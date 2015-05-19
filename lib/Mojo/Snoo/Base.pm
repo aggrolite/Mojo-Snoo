@@ -9,6 +9,49 @@ use Carp ();
 
 has base_url => (is => 'rw', default => 'http://www.reddit.com');
 
+# TODO we will need to be able to "refresh" the token when authenticating users
+has access_token => (is => 'rw', lazy => 1, builder => '_create_access_token');
+
+my %TOKEN_REQUIRED = map $_ => 1,
+  ( qw(
+      /api/vote
+      )
+  );
+
+sub _create_access_token {
+    my $self = shift;
+    # update base URL
+    my %form = (
+        grant_type => 'password',
+        username => $self->username,
+        password => $self->password,
+    );
+    my $access_url =
+        'https://'
+      . $self->client_id . ':'
+      . $self->client_secret
+      . '@www.reddit.com/api/v1/access_token';
+
+    my $res = Mojo::UserAgent->new->post($access_url => form => \%form)->res->json;
+
+    # if a problem arises, it is most likely due to given auth being incorrect
+    # let the user know in this case
+    if (exists($res->{error})) {
+        my $msg =
+          $res->{error} == 401
+          ? '401 status code (Unauthorized)'
+          : 'error response of ' . $res->{error};
+        Carp::croak("Received $msg while attempting to create OAuth access token.");
+    }
+
+    # update the base URL for future endpoint calls
+    $self->base_url('https://oauth.reddit.com');
+
+    # TODO we will want to eventually keep track of token type, scope and expiration
+    #      when dealing with user authentication (not just a personal script)
+    return $res->{access_token};
+}
+
 sub BUILDARGS {
     my ($class, %args) = @_;
 
@@ -28,19 +71,41 @@ sub BUILDARGS {
     \%args;
 }
 
+sub _token_required {
+    my ($self, $path) = @_;
+    return $TOKEN_REQUIRED{$path} ? 1 : 0;
+}
+
 sub _do_request {
     my ($self, $method, $path, %params) = @_;
+
+    my %headers;
+    if ($self->_token_required($path)) {
+        $headers{Authorization} = 'bearer ' . $self->access_token;
+    }
 
     my $agent = Mojo::UserAgent->new();
     my $url   = Mojo::URL->new($self->base_url);
 
+    $url->path("$path.json");
+
+    my $json;
     if ($method eq 'GET') {
-        $url->path("$path.json");
         $url->query(%params) if %params;
-        return $agent->get($url)->res->json;
+        $json = $agent->get($url => \%headers)->res->json;
+    }
+    else {
+        $json = $agent->post($url => \%headers, form => \%params)->res->json;
     }
 
-    return $agent->post($url, form => \%params)->res->body;
+    if (exists($json->{error})) {
+        my $msg =
+          $json->{error} == 401
+          ? '401 status code (Unauthorized)'
+          : 'error response of ' . $json->{error};
+        Carp::croak("Received $msg while calling endpoint of $path");
+    }
+    return $json;
 }
 
 sub _create_object {
