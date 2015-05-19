@@ -13,10 +13,21 @@ has name => (
     required => 1
 );
 
-# let the user call the constructor using new($user) or new(name => $user)
-sub BUILDARGS {
-    my ($class, @args) = @_;
-    @args > 1 ? $class->SUPER::BUILDARGS(@args) : {name => shift @args};
+sub send_message {
+    my $self = shift;
+
+    # make sure we're clear of any captcha if required
+    my ($captcha_id, $captcha_text) = $self->_solve_captcha();
+
+    my %form = (
+        api_type => 'json',
+        captcha  => $captcha_text,
+        iden     => $captcha_id,
+        subject  => 'subject goes here',
+        text     => 'body goes here',
+        to       => $self->name,
+    );
+    $self->_do_request('POST', '/api/compose', %form);
 }
 
 1;
