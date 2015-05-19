@@ -14,7 +14,7 @@ our $VERSION = '0.01';
 has content => (is => 'rw');
 
 sub multireddit {
-    shift->_create_object('Mojo::Snoo::Multireddit', @_ == 1 (id => shift) : @_);
+    shift->_create_object('Mojo::Snoo::Multireddit', @_ == 1 ? (name => shift) : @_);
 }
 
 sub subreddit {
