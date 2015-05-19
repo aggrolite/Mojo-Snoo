@@ -14,23 +14,23 @@ our $VERSION = '0.01';
 has content => (is => 'rw');
 
 sub multireddit {
-    shift->_create_object('Mojo::Snoo::Multireddit', @_);
+    shift->_create_object('Mojo::Snoo::Multireddit', @_ == 1 (id => shift) : @_);
 }
 
 sub subreddit {
-    shift->_create_object('Mojo::Snoo::Subreddit', @_);
+    shift->_create_object('Mojo::Snoo::Subreddit', @_ == 1 ? (name => shift) : @_);
 }
 
 sub thing {
-    shift->_create_object('Mojo::Snoo::Thing', @_);
+    shift->_create_object('Mojo::Snoo::Thing', @_ == 1 ? (name => shift) : @_);
 }
 
 sub comment {
-    shift->_create_object('Mojo::Snoo::Comment', @_);
+    shift->_create_object('Mojo::Snoo::Comment', @_ == 1 ? (id => shift) : @_);
 }
 
 sub user {
-    shift->_create_object('Mojo::Snoo::User', @_);
+    shift->_create_object('Mojo::Snoo::User', @_ == 1 ? (name => shift) : @_);
 }
 
 1;

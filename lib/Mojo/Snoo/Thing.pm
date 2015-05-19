@@ -15,12 +15,6 @@ has [qw( id name title subreddit )] => (is => 'ro');
 #use Data::Dumper;
 #sub BUILD { shift->_struct(shift) }
 
-# let the user call the constructor using new($thing) or new(name => $sub)
-sub BUILDARGS {
-    my ($class, @args) = @_;
-    @args > 1 ? $class->SUPER::BUILDARGS(@args) : {name => shift @args};
-}
-
 #has comments => \&_build_comments;
 
 #sub new {
@@ -56,7 +50,13 @@ sub _get_comments {
       map { $_->{kind} eq 't1' ? $_->{data} : () }
       map { @{$_->{data}{children}} } @$json;
 
-    my @things = map Mojo::Snoo::Comment->new(%$_), @children;
+    my %args = map { $_ => $self->$_ } (qw(
+        username
+        password
+        client_id
+        client_secret
+    ));
+    my @things = map Mojo::Snoo::Comment->new(%args, %$_), @children;
     Mojo::Collection->new(@things);
 }
 

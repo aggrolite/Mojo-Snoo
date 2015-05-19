@@ -9,14 +9,18 @@ use Carp ();
 
 has base_url => (is => 'rw', default => 'http://www.reddit.com');
 
+has [qw(username password client_id client_secret)] => (is => 'ro');
+
 # TODO we will need to be able to "refresh" the token when authenticating users
 has access_token => (is => 'rw', lazy => 1, builder => '_create_access_token');
 
-my %TOKEN_REQUIRED = map $_ => 1,
-  ( qw(
+my %TOKEN_REQUIRED = map { $_ => 1 } (
+    qw(
       /api/vote
+      /api/new_captcha
+      /api/compose
       )
-  );
+);
 
 sub _create_access_token {
     my $self = shift;
@@ -76,6 +80,23 @@ sub _token_required {
     return $TOKEN_REQUIRED{$path} ? 1 : 0;
 }
 
+sub _solve_captcha {
+    my $self = shift;
+    my $captcha_required = sub { $self->_do_request('GET', '/api/needs_captcha') };
+
+    # do not proceed if user does not require a captcha
+    return unless $captcha_required;
+
+    my $captcha = $self->_do_request('POST', '/api/new_captcha', api_type => 'json');
+    my $captcha_id = $captcha->{json}{data}{iden};
+
+    my $url = "http://www.reddit.com/captcha/$captcha_id.png";
+    print("Type the CAPTCHA text from $url here (Get more karma to avoid captchas).\nCAPTCHA text: ");
+
+    my $captcha_text = <STDIN>;
+    return ($captcha_id, chomp($captcha_text));
+}
+
 sub _do_request {
     my ($self, $method, $path, %params) = @_;
 
@@ -98,7 +119,8 @@ sub _do_request {
         $json = $agent->post($url => \%headers, form => \%params)->res->json;
     }
 
-    if (exists($json->{error})) {
+    # endpoints like /api/needs_captcha return only a boolean value
+    if (ref($json) eq 'Mojo::JSON' and exists($json->{error})) {
         my $msg =
           $json->{error} == 401
           ? '401 status code (Unauthorized)'
@@ -109,8 +131,15 @@ sub _do_request {
 }
 
 sub _create_object {
-    my ($self, $class, @args) = @_;
-    $class->new(@args);
+    my ($self, $class, %args) = @_;
+
+    for my $attr (qw(username password client_id client_secret)) {
+        next if exists $args{$attr};
+
+        $args{$attr} = $self->$attr if defined($self->$attr);
+    }
+
+    $class->new(%args);
 }
 
 sub _monkey_patch {

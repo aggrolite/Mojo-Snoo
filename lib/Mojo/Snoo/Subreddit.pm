@@ -17,12 +17,6 @@ has name => (
 has about => (is => 'ro', lazy => 1, builder => '_build_about');
 has mods  => (is => 'ro', lazy => 1, builder => '_build_mods');
 
-# let the user call the constructor using new($sub) or new(name => $sub)
-sub BUILDARGS {
-    my ($class, @args) = @_;
-    @args > 1 ? $class->SUPER::BUILDARGS(@args) : {name => shift @args};
-}
-
 sub _build_mods {
     my $self = shift;
     my $path = '/r/' . $self->name . '/about/moderators';
@@ -63,7 +57,13 @@ sub _get_things {
       map { $_->{kind} eq 't3' ? $_->{data} : () }    #
       @{$json->{data}{children}};
 
-    my @things = map Mojo::Snoo::Thing->new(%$_), @children;
+    my %args = map { $_ => $self->$_ } (qw(
+        username
+        password
+        client_id
+        client_secret
+    ));
+    my @things = map Mojo::Snoo::Thing->new(%args, %$_), @children;
     Mojo::Collection->new(@things);
 }
 
