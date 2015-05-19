@@ -1,4 +1,5 @@
 use Test::More;
+use Test::Exception;
 
 BEGIN {
     use_ok('Mojo::Snoo');
@@ -7,6 +8,20 @@ BEGIN {
 diag('Creating Mojo::Snoo object');
 my $snoo = Mojo::Snoo->new();
 isa_ok($snoo, 'Mojo::Snoo');
+
+diag('Creating Mojo::Snoo object with OAuth fields');
+my $oauth_snoo = Mojo::Snoo->new(
+    username      => 'user',
+    password      => 'verysecret',
+    client_id     => 'clientID',
+    client_secret => 'clientSecret',
+);
+isa_ok($snoo, 'Mojo::Snoo');
+
+diag('Creating Mojo::Snoo object with insufficient OAuth fields');
+throws_ok { Mojo::Snoo->new(username => 'foobar') }
+qr/^OAuth requires the following fields to be defined: username, password, client_id, client_secret
+Fields defined: username at\b/;
 
 diag(q@Checking can_ok for Mojo::Snoo's methods@);
 can_ok($snoo, qw(multireddit subreddit thing comment user));
