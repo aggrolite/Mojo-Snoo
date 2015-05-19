@@ -20,12 +20,13 @@ has mods  => (is => 'ro', lazy => 1, builder => '_build_mods');
 # let the user call the constructor using new($sub) or new(name => $sub)
 sub BUILDARGS {
     my ($class, @args) = @_;
-    @args > 1 ? {@args} : {name => shift @args};
+    @args > 1 ? $class->SUPER::BUILDARGS(@args) : {name => shift @args};
 }
 
 sub _build_mods {
     my $self = shift;
-    my $json = $self->_get('/r/' . $self->name . '/about/moderators');
+    my $path = '/r/' . $self->name . '/about/moderators';
+    my $json = $self->_do_request('GET', $path);
 
     my @mods = @{$json->{data}{children}};
 
@@ -39,7 +40,8 @@ sub _build_mods {
 
 sub _build_about {
     my $self = shift;
-    my $json = $self->_get('/r/' . $self->name . '/about');
+    my $path = '/r/' . $self->name . '/about';
+    my $json = $self->_do_request('GET', $path);
 
     my $pkg = 'Mojo::Snoo::Subreddit::About::' . $self->name;
     $self->_monkey_patch($pkg, $json->{data});
@@ -55,7 +57,7 @@ sub _get_things {
     $params{t}     = $time  if $time;
     $params{limit} = $limit if $limit;
 
-    my $json = $self->_get($path, %params);
+    my $json = $self->_do_request('GET', $path, %params);
 
     my @children =
       map { $_->{kind} eq 't3' ? $_->{data} : () }    #

@@ -9,14 +9,38 @@ use Carp ();
 
 has base_url => (is => 'rw', default => 'http://www.reddit.com');
 
-sub _get {
-    my ($self, $path, %params) = @_;
+sub BUILDARGS {
+    my ($class, %args) = @_;
 
-    my $url = Mojo::URL->new($self->base_url);
-    $url->path("$path.json");
-    $url->query(%params) if %params;
+    # if the user wants oauth, make sure we have all required fields
+    my @oauth_required = (qw(username password client_id client_secret));
+    my @oauth_given = grep defined($args{$_}), @oauth_required;
 
-    Mojo::UserAgent->new->get($url)->res->json;
+    if (@oauth_given and @oauth_given < 4) {
+        Carp::croak(    #
+            'OAuth requires the following fields to be defined: '
+              . join(', ', @oauth_required) . "\n"
+              . 'Fields defined: '
+              . join(', ', @oauth_given)
+        );
+    }
+
+    \%args;
+}
+
+sub _do_request {
+    my ($self, $method, $path, %params) = @_;
+
+    my $agent = Mojo::UserAgent->new();
+    my $url   = Mojo::URL->new($self->base_url);
+
+    if ($method eq 'GET') {
+        $url->path("$path.json");
+        $url->query(%params) if %params;
+        return $agent->get($url)->res->json;
+    }
+
+    return $agent->post($url, form => \%params)->res->body;
 }
 
 sub _create_object {

@@ -17,7 +17,7 @@ has name => (
 # let the user call the constructor using new($multi) or new(name => $multi)
 sub BUILDARGS {
     my ($class, @args) = @_;
-    @args > 1 ? {@args} : {name => shift @args};
+    @args > 1 ? $class->SUPER::BUILDARGS(@args) : {name => shift @args};
 }
 
 # fetch things

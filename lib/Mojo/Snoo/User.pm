@@ -13,10 +13,10 @@ has name => (
     required => 1
 );
 
-# let the user call the constructor using new($name) or new(name => $name)
+# let the user call the constructor using new($user) or new(name => $user)
 sub BUILDARGS {
     my ($class, @args) = @_;
-    @args > 1 ? {@args} : {name => shift @args};
+    @args > 1 ? $class->SUPER::BUILDARGS(@args) : {name => shift @args};
 }
 
 1;

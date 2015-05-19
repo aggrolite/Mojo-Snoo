@@ -20,10 +20,10 @@ has replies => (
     trigger => sub { warn dumper($_) for @_ },
 );
 
-# let the user call the constructor using new($sub) or new(name => $sub)
+# let the user call the constructor using new($comment) or new(id => $comment)
 sub BUILDARGS {
     my ($class, @args) = @_;
-    @args > 1 ? {@args} : {id => shift @args};
+    @args > 1 ? $class->SUPER::BUILDARGS(@args) : {id => shift @args};
 }
 
 1;
