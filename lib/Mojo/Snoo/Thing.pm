@@ -6,7 +6,7 @@ extends 'Mojo::Snoo::Base';
 use Mojo::Collection;
 use Mojo::Snoo::Comment;
 
-has [qw( id title subreddit )] => (is => 'ro');
+has [qw( id name title subreddit )] => (is => 'ro');
 
 #has subreddit => (is => 'ro');
 
@@ -60,6 +60,17 @@ sub _get_comments {
     Mojo::Collection->new(@things);
 }
 
+sub _vote {
+    my ($self, $direction) = @_;
+
+    my %params = (
+        dir => $direction,
+	id => $self->name,
+    );
+
+    $self->_do_request('POST', '/api/vote', %params);
+}
+
 # comments_hot
 # comments_new
 # comments_top('
@@ -68,6 +79,10 @@ sub _get_comments {
 # TODO pass params:
 # http://www.reddit.com/dev/api#GET_comments_{article}
 sub comments { shift->_get_comments }
+
+sub upvote   { shift->_vote(1)  }
+sub downvote { shift->_vote(-1) }
+sub unvote   { shift->_vote(0)  }
 
 sub save { }
 
