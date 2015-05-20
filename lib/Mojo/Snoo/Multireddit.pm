@@ -6,6 +6,8 @@ extends 'Mojo::Snoo::Base';
 use Mojo::Collection;
 use Mojo::Snoo::Subreddit;
 
+use constant FIELD => 'name';
+
 has name => (
     is  => 'ro',
     isa => sub {
@@ -15,10 +17,7 @@ has name => (
 );
 
 # let the user call the constructor using new($multi) or new(name => $multi)
-sub BUILDARGS {
-    my ($class, @args) = @_;
-    @args > 1 ? $class->SUPER::BUILDARGS(@args) : {name => shift @args};
-}
+sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (name => shift) : @_) }
 
 # fetch things
 # create new thing objects

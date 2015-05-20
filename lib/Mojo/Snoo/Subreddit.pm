@@ -6,6 +6,8 @@ extends 'Mojo::Snoo::Base';
 use Mojo::Collection;
 use Mojo::Snoo::Thing;
 
+use constant FIELD => 'name';
+
 has name => (
     is  => 'ro',
     isa => sub {
@@ -16,6 +18,8 @@ has name => (
 
 has about => (is => 'ro', lazy => 1, builder => '_build_about');
 has mods  => (is => 'ro', lazy => 1, builder => '_build_mods');
+
+sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (name => shift) : @_) }
 
 sub _build_mods {
     my $self = shift;

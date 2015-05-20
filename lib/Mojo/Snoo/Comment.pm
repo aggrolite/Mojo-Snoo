@@ -3,6 +3,8 @@ use Moo;
 
 extends 'Mojo::Snoo::Base';
 
+use constant FIELD => 'id';
+
 has id => (
     is  => 'ro',
     isa => sub {
@@ -21,10 +23,7 @@ has replies => (
 );
 
 # let the user call the constructor using new($comment) or new(id => $comment)
-sub BUILDARGS {
-    my ($class, @args) = @_;
-    @args > 1 ? $class->SUPER::BUILDARGS(@args) : {id => shift @args};
-}
+sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (id => shift) : @_) }
 
 1;
 

@@ -9,7 +9,7 @@ use Carp ();
 
 has base_url => (is => 'rw', default => 'http://www.reddit.com');
 
-has [qw(username password client_id client_secret)] => (is => 'ro');
+has [qw(username password client_id client_secret)] => (is => 'ro', predicate => 1);
 
 # TODO we will need to be able to "refresh" the token when authenticating users
 has access_token => (is => 'rw', lazy => 1, builder => '_create_access_token');
@@ -131,14 +131,18 @@ sub _do_request {
 }
 
 sub _create_object {
-    my ($self, $class, %args) = @_;
+    my ($self, $class, @args) = @_;
+
+    # allow the user to pass in single strings, e.g. $object->subreddit(‘perl’)
+    my %args = @args > 1 ? @args : ($class->FIELD => $args[0]);
 
     for my $attr (qw(username password client_id client_secret)) {
-        next if exists $args{$attr};
+        ## allow user to override OAuth settings via constructor
+        next if exists($args{$attr});
 
-        $args{$attr} = $self->$attr if defined($self->$attr);
+        my $has_attr = "has_$attr";
+        $args{$attr} = $self->$attr if $self->$has_attr;
     }
-
     $class->new(%args);
 }
 

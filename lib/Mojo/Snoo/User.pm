@@ -5,6 +5,8 @@ extends 'Mojo::Snoo::Base';
 
 use Mojo::Collection;
 
+use constant FIELD => 'name';
+
 has name => (
     is  => 'ro',
     isa => sub {
@@ -12,6 +14,8 @@ has name => (
     },
     required => 1
 );
+
+sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (name => shift) : @_) }
 
 sub send_message {
     my $self = shift;

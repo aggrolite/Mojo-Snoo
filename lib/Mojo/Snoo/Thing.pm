@@ -6,6 +6,8 @@ extends 'Mojo::Snoo::Base';
 use Mojo::Collection;
 use Mojo::Snoo::Comment;
 
+use constant FIELD => 'name';
+
 has [qw( id name title subreddit )] => (is => 'ro');
 
 #has subreddit => (is => 'ro');
@@ -33,6 +35,8 @@ has [qw( id name title subreddit )] => (is => 'ro');
 #
 #    $self->SUPER::new(%$post);
 #}
+
+sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (name => shift) : @_) }
 
 sub _get_comments {
     my ($self, $sort) = @_;
