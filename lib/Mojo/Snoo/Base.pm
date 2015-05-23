@@ -16,6 +16,8 @@ has access_token => (is => 'rw', lazy => 1, builder => '_create_access_token');
 
 my %TOKEN_REQUIRED = map { $_ => 1 } (
     qw(
+      /api/unsave
+      /api/save
       /api/vote
       /api/new_captcha
       /api/compose

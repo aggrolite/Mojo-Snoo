@@ -88,6 +88,16 @@ sub upvote   { shift->_vote(1)  }
 sub downvote { shift->_vote(-1) }
 sub unvote   { shift->_vote(0)  }
 
-sub save { }
+# TODO support category (gold accounts only)
+sub save {
+    my $self = shift;
+    $self->_do_request('POST', '/api/save', id => $self->name);
+}
+
+# TODO support category (gold accounts only)
+sub unsave {
+    my $self = shift;
+    $self->_do_request('POST', '/api/unsave', id => $self->name);
+}
 
 1;
