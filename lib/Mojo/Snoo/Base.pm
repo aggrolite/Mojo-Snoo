@@ -82,7 +82,7 @@ sub _token_required {
 
 sub _solve_captcha {
     my $self = shift;
-    my $captcha_required = sub { $self->_do_request('GET', '/api/needs_captcha') };
+    my $captcha_required = $self->_do_request('GET', '/api/needs_captcha');
 
     # do not proceed if user does not require a captcha
     return unless $captcha_required;
