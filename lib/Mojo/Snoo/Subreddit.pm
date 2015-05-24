@@ -62,12 +62,14 @@ sub _get_things {
       map { $_->{kind} eq 't3' ? $_->{data} : () }    #
       @{$json->{data}{children}};
 
-    my %args = map { $_ => $self->$_ } (qw(
-        username
-        password
-        client_id
-        client_secret
-    ));
+    my %args = map { $_ => $self->$_ } (
+        qw(
+          username
+          password
+          client_id
+          client_secret
+          )
+    );
     my @things = map Mojo::Snoo::Thing->new(%args, %$_), @children;
     Mojo::Collection->new(@things);
 }
