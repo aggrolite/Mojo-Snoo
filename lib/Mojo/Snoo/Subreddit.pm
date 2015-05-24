@@ -100,23 +100,22 @@ Mojo::Snoo::Subreddit - Mojo wrapper for Reddit Subreddits
 
     # OAuth ONLY. Reddit is deprecating cookie auth soon.
     my $snoo = Mojo::Snoo::Subreddit->new(
+        name          => 'perl',
         username      => 'foobar',
         password      => 'very_secret',
         client_id     => 'oauth_client_id',
         client_secret => 'very_secret_oauth',
     );
 
-    # send message to /u/foobar
-    $snoo->send_message(
-        title => 'this is not spam',
-        body  => q@Hi, how ya doin'?@,
-    );
+    # print each title from /r/perl post
+    # (OAuth not required for this action)
+    $snoo->things->each(sub { say $_->title });
 
 =head1 ATTRIBUTES
 
 =head2 name
 
-The name of the user. This is required for object
+The name of the subreddit. This is required for object
 instantiation. The constructor can accept a single
 string value or key/value pairs. Examples:
 
