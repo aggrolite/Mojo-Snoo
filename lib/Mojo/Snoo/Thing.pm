@@ -101,3 +101,57 @@ sub unsave {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+Mojo::Snoo::Thing - Mojo wrapper for Reddit Things
+
+=head1 SYNOPSIS
+
+    use Mojo::Snoo::Thing;
+
+    # OAuth ONLY. Reddit is deprecating cookie auth soon.
+    my $thing = Mojo::Snoo::Thing->new(
+        name          => 't3_36x619',
+        username      => 'foobar',
+        password      => 'very_secret',
+        client_id     => 'oauth_client_id',
+        client_secret => 'very_secret_oauth',
+    );
+
+    # save this listing (or "thing")
+    $thing->save();
+
+=head1 ATTRIBUTES
+
+=head2 id
+
+The name of the thing. This is required for object
+instantiation. The constructor can accept a single
+string value or key/value pairs. Examples:
+
+    Mojo::Snoo::Thing->new('t3_36x619')->name;
+    Mojo::Snoo::Thing->new(name => 't3_36x619')->name;
+
+=head1 METHODS
+
+=head2 comments
+
+Returns a L<Mojo::Collection> object containing a list of
+L<Mojo::Snoo::Comment> objects.
+
+    GET /r/$subreddit/comments/article
+
+=head1 API DOCUMENTATION
+
+Please see the official L<Reddit API documentation|http://www.reddit.com/dev/api>
+for more details regarding the usage of endpoints. For a better idea of how
+OAuth works, see the L<Quick Start|https://github.com/reddit/reddit/wiki/OAuth2-Quick-Start-Example>
+and the L<full documentation|https://github.com/reddit/reddit/wiki/OAuth2>. There is
+also a lot of useful information of the L<redditdev subreddit|http://www.reddit.com/r/redditdev>.
+
+=head1 LICENSE
+
+The (two-clause) FreeBSD License. See LICENSE for details.
