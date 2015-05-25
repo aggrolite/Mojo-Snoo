@@ -10,32 +10,6 @@ use constant FIELD => 'name';
 
 has [qw( id name title subreddit )] => (is => 'ro');
 
-#has subreddit => (is => 'ro');
-
-# TODO buildargs for user direct call
-
-#use Data::Dumper;
-#sub BUILD { shift->_struct(shift) }
-
-#has comments => \&_build_comments;
-
-#sub new {
-#    my ($class, $id) = @_;
-#
-#    my $self = bless({}, $class);
-#    $self->SUPER::new() if caller =~ /^Mojo::Snoo::Subreddit/;
-#
-#    Carp::croak 'Thing ID must be provided!' unless defined $id;
-#
-#    my $json = $self->_get('/comments/' . $id);
-#
-#    my ($post) =
-#      map { $_->{kind} eq 't3' ? $_->{data} : () }    #
-#      map { @{$_->{data}{children}} } @$json;
-#
-#    $self->SUPER::new(%$post);
-#}
-
 sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (name => shift) : @_) }
 
 sub _get_comments {
