@@ -10,32 +10,41 @@ use constant FIELD => 'name';
 
 has [qw( id name title subreddit )] => (is => 'ro');
 
+# TODO trim t3_ off
+# Thing class should accept IDs for links, comments, etc. and route to
+#   their respective classes
 sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (name => shift) : @_) }
 
 sub _get_comments {
-    my ($self, $sort) = @_;
+    my $cb;    # callback optional
+    my ($self, $limit, $sort, $time) = map {    #
+        ref($_) eq 'CODE' && ($cb = $_) ? () : $_;
+    } @_;
 
-    my $path = '/r/' . $self->subreddit . '/comments/' . $self->id;
-
-    #$path .= "/$sort" if $sort;
+    my $path = '/comments/' . $self->id;
 
     my %params;
-    $params{sort} = $sort if $sort;
+    $params{sort}  = $sort  if $sort;
+    $params{t}     = $time  if $time;
+    $params{limit} = $limit if $limit;
 
-    my $json = $self->_do_request('GET', $path, %params);
+    my $res = $self->_do_request('GET', $path, %params);
+    $res->$cb if $cb;
 
     my @children =
       map { $_->{kind} eq 't1' ? $_->{data} : () }
-      map { @{$_->{data}{children}} } @$json;
+      map { @{$_->{data}{children}} } @{$res->json};
 
-    my %args = map { $_ => $self->$_ } (qw(
-        username
-        password
-        client_id
-        client_secret
-    ));
-    my @things = map Mojo::Snoo::Comment->new(%args, %$_), @children;
-    Mojo::Collection->new(@things);
+    my %args = map { $_ => $self->$_ } (
+        qw(
+          username
+          password
+          client_id
+          client_secret
+          )
+    );
+
+    Mojo::Collection->new(map { Mojo::Snoo::Comment->new(%args, %$_) } @children);
 }
 
 sub _vote {
