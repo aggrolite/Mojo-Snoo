@@ -18,8 +18,20 @@ has [qw( author body )] => (is => 'ro');
 use Mojo::Util qw(dumper);
 
 has replies => (
-    is      => 'rw',
-    trigger => sub { warn dumper($_) for @_ },
+    is     => 'rw',
+    coerce => sub {
+        my $replies = shift;
+
+        # comments without replies contain " "
+        my $children = ref($replies) ? $replies->{data}{children} : [];
+        return Mojo::Collection->new(
+            map {
+                $_->{kind} eq 't1'    # unloaded comments have type 'more'
+                  ? Mojo::Snoo::Comment->new(%{$_->{data}})
+                  : ()
+            } @$children
+        );
+    },
 );
 
 # let the user call the constructor using new($comment) or new(id => $comment)
