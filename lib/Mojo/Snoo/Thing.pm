@@ -56,7 +56,7 @@ sub _vote {
 # defaults to comments_hot?
 # TODO pass params:
 # http://www.reddit.com/dev/api#GET_comments_{article}
-sub comments { shift->_get_comments }
+sub comments { shift->_get_comments(@_) }
 
 sub upvote   { shift->_vote(1)  }
 sub downvote { shift->_vote(-1) }
