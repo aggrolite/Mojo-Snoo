@@ -47,15 +47,10 @@ sub _build_about {
 }
 
 sub _get_things {
-    my $self = shift;
-
-    # define our callback, if given
-    my $cb;
-    for my $i (0 .. $#_) {
-        $cb = splice(@_, $i, 1), last if ref($_[$i]) eq 'CODE';
-    }
-
-    my ($limit, $sort, $time) = @_;
+    my $cb;    # callback optional
+    my ($self, $limit, $sort, $time) = map {    #
+        ref($_) eq 'CODE' && ($cb = $_) ? () : $_;
+    } @_;
 
     my $path = '/r/' . $self->name;
     $path .= "/$sort" if $sort;
@@ -82,8 +77,7 @@ sub _get_things {
           client_secret
           )
     );
-    my @things = map Mojo::Snoo::Thing->new(%args, %$_), @children;
-    Mojo::Collection->new(@things);
+    Mojo::Collection->new(map { Mojo::Snoo::Thing->new(%args, %$_) } @children);
 }
 
 sub things              { shift->_get_things(@_                          ) }
