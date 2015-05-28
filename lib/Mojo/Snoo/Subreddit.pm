@@ -86,19 +86,19 @@ sub _get_things {
     Mojo::Collection->new(@things);
 }
 
-sub things              { shift->_get_things(shift) }
-sub things_new          { shift->_get_things(shift, 'new') }
-sub things_rising       { shift->_get_things(shift, 'rising') }
-sub things_contro       { shift->_get_things(shift, 'controversial') }
-sub things_contro_week  { shift->_get_things(shift, 'controversial', 'week') }
-sub things_contro_month { shift->_get_things(shift, 'controversial', 'month') }
-sub things_contro_year  { shift->_get_things(shift, 'controversial', 'year') }
-sub things_contro_all   { shift->_get_things(shift, 'controversial', 'all') }
-sub things_top          { shift->_get_things(shift, 'top') }
-sub things_top_week     { shift->_get_things(shift, 'top', 'week') }
-sub things_top_month    { shift->_get_things(shift, 'top', 'month') }
-sub things_top_year     { shift->_get_things(shift, 'top', 'year') }
-sub things_top_all      { shift->_get_things(shift, 'top', 'all') }
+sub things              { shift->_get_things(@_                          ) }
+sub things_new          { shift->_get_things(@_, 'new'                   ) }
+sub things_rising       { shift->_get_things(@_, 'rising'                ) }
+sub things_contro       { shift->_get_things(@_, 'controversial'         ) }
+sub things_contro_week  { shift->_get_things(@_, 'controversial', 'week' ) }
+sub things_contro_month { shift->_get_things(@_, 'controversial', 'month') }
+sub things_contro_year  { shift->_get_things(@_, 'controversial', 'year' ) }
+sub things_contro_all   { shift->_get_things(@_, 'controversial', 'all'  ) }
+sub things_top          { shift->_get_things(@_, 'top'                   ) }
+sub things_top_week     { shift->_get_things(@_, 'top', 'week'           ) }
+sub things_top_month    { shift->_get_things(@_, 'top', 'month'          ) }
+sub things_top_year     { shift->_get_things(@_, 'top', 'year'           ) }
+sub things_top_all      { shift->_get_things(@_, 'top', 'all'            ) }
 
 1;
 
