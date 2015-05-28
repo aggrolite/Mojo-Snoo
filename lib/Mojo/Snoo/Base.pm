@@ -112,24 +112,11 @@ sub _do_request {
 
     $url->path("$path.json");
 
-    my $json;
     if ($method eq 'GET') {
         $url->query(%params) if %params;
-        $json = $agent->get($url => \%headers)->res->json;
+        return $agent->get($url => \%headers)->res;
     }
-    else {
-        $json = $agent->post($url => \%headers, form => \%params)->res->json;
-    }
-
-    # endpoints like /api/needs_captcha return only a boolean value
-    if (ref($json) eq 'Mojo::JSON' and exists($json->{error})) {
-        my $msg =
-          $json->{error} == 401
-          ? '401 status code (Unauthorized)'
-          : 'error response of ' . $json->{error};
-        Carp::croak("Received $msg while calling endpoint of $path");
-    }
-    return $json;
+    return $agent->post($url => \%headers, form => \%params)->res;
 }
 
 sub _create_object {
