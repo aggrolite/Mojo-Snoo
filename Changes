@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+0.03  2015-06-03 20:13:33 PDT
+    - Add Test::Exception as dependency
+
 0.02  2015-06-03 10:17:07 PDT
     - And now a CPAN release
 
