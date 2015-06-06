@@ -67,9 +67,9 @@ Returns a [Mojo::Snoo::Multireddit](https://metacpan.org/pod/Mojo::Snoo::Multire
 
 Returns a [Mojo::Snoo::Subreddit](https://metacpan.org/pod/Mojo::Snoo::Subreddit) object.
 
-## thing
+## link
 
-Returns a [Mojo::Snoo::Thing](https://metacpan.org/pod/Mojo::Snoo::Thing) object.
+Returns a [Mojo::Snoo::Link](https://metacpan.org/pod/Mojo::Snoo::Link) object.
 
 ## comment
 
