@@ -24,7 +24,7 @@ qr/^OAuth requires the following fields to be defined: username, password, clien
 Fields defined: username at\b/;
 
 diag(q@Checking can_ok for Mojo::Snoo's methods@);
-can_ok($snoo, qw(multireddit subreddit thing comment user));
+can_ok($snoo, qw(multireddit subreddit link comment user));
 
 my $multi = $snoo->multireddit('foo');
 isa_ok($multi, 'Mojo::Snoo::Multireddit');
@@ -32,8 +32,8 @@ isa_ok($multi, 'Mojo::Snoo::Multireddit');
 my $sub = $snoo->subreddit('foo');
 isa_ok($sub, 'Mojo::Snoo::Subreddit');
 
-my $thing = $snoo->thing('foo');
-isa_ok($thing, 'Mojo::Snoo::Thing');
+my $link = $snoo->link('foo');
+isa_ok($link, 'Mojo::Snoo::Link');
 
 my $comment = $snoo->comment('foo');
 isa_ok($comment, 'Mojo::Snoo::Comment');

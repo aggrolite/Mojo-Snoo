@@ -108,7 +108,7 @@ Returns a L<Mojo::Snoo::Subreddit> object.
 
 =head2 thing
 
-Returns a L<Mojo::Snoo::Thing> object.
+Returns a L<Mojo::Snoo::Link> object.
 
 =head2 comment
 

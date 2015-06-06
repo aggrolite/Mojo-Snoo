@@ -10,7 +10,7 @@ use constant FIELD => 'name';
 
 has [qw( id name title subreddit )] => (is => 'ro');
 
-sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (name => shift) : @_) }
+sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (id => shift) : @_) }
 
 sub _get_comments {
     my $cb;    # callback optional
