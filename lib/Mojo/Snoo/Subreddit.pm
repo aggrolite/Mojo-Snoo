@@ -4,7 +4,7 @@ use Moo;
 extends 'Mojo::Snoo::Base';
 
 use Mojo::Collection;
-use Mojo::Snoo::Thing;
+use Mojo::Snoo::Link;
 
 use constant FIELD => 'name';
 
@@ -46,7 +46,7 @@ sub _build_about {
     $self->_monkey_patch($pkg, $json->{data});
 }
 
-sub _get_things {
+sub _get_links {
     my $cb;    # callback optional
     my ($self, $limit, $sort, $time) = map {    #
         ref($_) eq 'CODE' && ($cb = $_) ? () : $_;
@@ -77,22 +77,22 @@ sub _get_things {
           client_secret
           )
     );
-    Mojo::Collection->new(map { Mojo::Snoo::Thing->new(%args, %$_) } @children);
+    Mojo::Collection->new(map { Mojo::Snoo::Link->new(%args, %$_) } @children);
 }
 
-sub things              { shift->_get_things(@_                          ) }
-sub things_new          { shift->_get_things(@_, 'new'                   ) }
-sub things_rising       { shift->_get_things(@_, 'rising'                ) }
-sub things_contro       { shift->_get_things(@_, 'controversial'         ) }
-sub things_contro_week  { shift->_get_things(@_, 'controversial', 'week' ) }
-sub things_contro_month { shift->_get_things(@_, 'controversial', 'month') }
-sub things_contro_year  { shift->_get_things(@_, 'controversial', 'year' ) }
-sub things_contro_all   { shift->_get_things(@_, 'controversial', 'all'  ) }
-sub things_top          { shift->_get_things(@_, 'top'                   ) }
-sub things_top_week     { shift->_get_things(@_, 'top', 'week'           ) }
-sub things_top_month    { shift->_get_things(@_, 'top', 'month'          ) }
-sub things_top_year     { shift->_get_things(@_, 'top', 'year'           ) }
-sub things_top_all      { shift->_get_things(@_, 'top', 'all'            ) }
+sub links              { shift->_get_links(@_                          ) }
+sub links_new          { shift->_get_links(@_, 'new'                   ) }
+sub links_rising       { shift->_get_links(@_, 'rising'                ) }
+sub links_contro       { shift->_get_links(@_, 'controversial'         ) }
+sub links_contro_week  { shift->_get_links(@_, 'controversial', 'week' ) }
+sub links_contro_month { shift->_get_links(@_, 'controversial', 'month') }
+sub links_contro_year  { shift->_get_links(@_, 'controversial', 'year' ) }
+sub links_contro_all   { shift->_get_links(@_, 'controversial', 'all'  ) }
+sub links_top          { shift->_get_links(@_, 'top'                   ) }
+sub links_top_week     { shift->_get_links(@_, 'top', 'week'           ) }
+sub links_top_month    { shift->_get_links(@_, 'top', 'month'          ) }
+sub links_top_year     { shift->_get_links(@_, 'top', 'year'           ) }
+sub links_top_all      { shift->_get_links(@_, 'top', 'all'            ) }
 
 1;
 
@@ -117,7 +117,7 @@ Mojo::Snoo::Subreddit - Mojo wrapper for Reddit Subreddits
 
     # print each title from /r/perl post
     # (OAuth not required for this action)
-    $snoo->things->each(sub { say $_->title });
+    $snoo->links->each(sub { say $_->title });
 
 =head1 ATTRIBUTES
 
@@ -165,86 +165,86 @@ monkey-patched objects. Example:
 
 =head1 METHODS
 
-=head2 things
+=head2 links
 
 Returns a L<Mojo::Collection> object containing a list of
-L<Mojo::Snoo::Thing> objects.
+L<Mojo::Snoo::Link> objects.
 
     GET /r/$subreddit
 
 Accepts one argument which indicates the maximum number of
-Things (reddit API's limit parameter). Default is 25, max
+Links (reddit API's limit parameter). Default is 25, max
 is 100.
 
-=head2 things_new
+=head2 links_new
 
-Like L</things> but sorted by new.
+Like L</links> but sorted by new.
 
     GET /r/$subreddit/new
 
-=head2 things_rising
+=head2 links_rising
 
-Like L</things> but sorted by rising.
+Like L</links> but sorted by rising.
 
     GET /r/$subreddit/rising
 
-=head2 things_top
+=head2 links_top
 
-Like L</things> but sorted by top (most upvoted).
+Like L</links> but sorted by top (most upvoted).
 
     GET /r/$subreddit/top
 
-=head2 things_top_week
+=head2 links_top_week
 
-Like L</things_top> but from the past week.
+Like L</links_top> but from the past week.
 
     GET /r/$subreddit/top?t=week
 
-=head2 things_top_month
+=head2 links_top_month
 
-Like L</things_top> but from the past month.
+Like L</links_top> but from the past month.
 
     GET /r/$subreddit/top?t=month
 
-=head2 things_top_year
+=head2 links_top_year
 
-Like L</things_top> but from the past year.
+Like L</links_top> but from the past year.
 
     GET /r/$subreddit/top?t=year
 
-=head2 things_top_all
+=head2 links_top_all
 
-Like L</things_top> but from all time.
+Like L</links_top> but from all time.
 
     GET /r/$subreddit/top?t=all
 
-=head2 things_contro
+=head2 links_contro
 
-Like L</things> but sorted by controversial.
+Like L</links> but sorted by controversial.
 
     GET /r/$subreddit/controversial
 
-=head2 things_contro_week
+=head2 links_contro_week
 
-Like L</things_contro> but from the past week.
+Like L</links_contro> but from the past week.
 
     GET /r/$subreddit/controversial?t=week
 
-=head2 things_contro_month
+=head2 links_contro_month
 
-Like L</things_contro> but from the past month.
+Like L</links_contro> but from the past month.
 
     GET /r/$subreddit/controversial?t=month
 
-=head2 things_contro_year
+=head2 links_contro_year
 
-Like L</things_contro> but from the past year.
+Like L</links_contro> but from the past year.
 
     GET /r/$subreddit/controversial?t=year
 
-=head2 things_contro_all
+=head2 links_contro_all
 
-Like L</things_contro> but from all time.
+Like L</links_contro> but from all time.
 
     GET /r/$subreddit/controversial?t=all
 

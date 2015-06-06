@@ -1,4 +1,4 @@
-package Mojo::Snoo::Thing;
+package Mojo::Snoo::Link;
 use Moo;
 
 extends 'Mojo::Snoo::Base';
@@ -10,10 +10,7 @@ use constant FIELD => 'name';
 
 has [qw( id name title subreddit )] => (is => 'ro');
 
-# TODO trim t3_ off
-# Thing class should accept IDs for links, comments, etc. and route to
-#   their respective classes
-sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (name => shift) : @_) }
+sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (id => shift) : @_) }
 
 sub _get_comments {
     my $cb;    # callback optional
@@ -58,10 +55,6 @@ sub _vote {
     $self->_do_request('POST', '/api/vote', %params);
 }
 
-# comments_hot
-# comments_new
-# comments_top('
-# $thing->comments($sort);
 # defaults to comments_hot?
 # TODO pass params:
 # http://www.reddit.com/dev/api#GET_comments_{article}
@@ -89,34 +82,34 @@ __END__
 
 =head1 NAME
 
-Mojo::Snoo::Thing - Mojo wrapper for Reddit Things
+Mojo::Snoo::Link - Mojo wrapper for Reddit Links (t3_ Things)
 
 =head1 SYNOPSIS
 
-    use Mojo::Snoo::Thing;
+    use Mojo::Snoo::Link;
 
     # OAuth ONLY. Reddit is deprecating cookie auth soon.
-    my $thing = Mojo::Snoo::Thing->new(
-        name          => 't3_36x619',
+    my $link = Mojo::Snoo::Link->new(
+        id            => '36x619',
         username      => 'foobar',
         password      => 'very_secret',
         client_id     => 'oauth_client_id',
         client_secret => 'very_secret_oauth',
     );
 
-    # save this listing (or "thing")
-    $thing->save();
+    # save this link
+    $link->save();
 
 =head1 ATTRIBUTES
 
 =head2 id
 
-The name of the thing. This is required for object
+The ID of the link. This is required for object
 instantiation. The constructor can accept a single
 string value or key/value pairs. Examples:
 
-    Mojo::Snoo::Thing->new('t3_36x619')->name;
-    Mojo::Snoo::Thing->new(name => 't3_36x619')->name;
+    Mojo::Snoo::Link->new('36x619')->id;
+    Mojo::Snoo::Link->new(id => '36x619')->id;
 
 =head1 METHODS
 

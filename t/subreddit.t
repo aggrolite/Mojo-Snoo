@@ -10,19 +10,19 @@ isa_ok($perl, 'Mojo::Snoo::Subreddit');
 
 my @subs = (
     qw(
-      things
-      things_new
-      things_rising
-      things_contro
-      things_contro_week
-      things_contro_month
-      things_contro_year
-      things_contro_all
-      things_top
-      things_top_week
-      things_top_month
-      things_top_year
-      things_top_all
+      links
+      links_new
+      links_rising
+      links_contro
+      links_contro_week
+      links_contro_month
+      links_contro_year
+      links_contro_all
+      links_top
+      links_top_week
+      links_top_month
+      links_top_year
+      links_top_all
       )
 );
 diag(q@Checking can_ok for Mojo::Snoo::Subreddit's methods@);

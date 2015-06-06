@@ -5,7 +5,7 @@ extends 'Mojo::Snoo::Base';
 
 use Mojo::Snoo::Multireddit;
 use Mojo::Snoo::Subreddit;
-use Mojo::Snoo::Thing;
+use Mojo::Snoo::Link;
 use Mojo::Snoo::Comment;
 use Mojo::Snoo::User;
 
@@ -21,8 +21,8 @@ sub subreddit {
     shift->_create_object('Mojo::Snoo::Subreddit', @_);
 }
 
-sub thing {
-    shift->_create_object('Mojo::Snoo::Thing', @_);
+sub link {
+    shift->_create_object('Mojo::Snoo::Link', @_);
 }
 
 sub comment {
@@ -107,9 +107,9 @@ Returns a L<Mojo::Snoo::Multireddit> object.
 
 Returns a L<Mojo::Snoo::Subreddit> object.
 
-=head2 thing
+=head2 link
 
-Returns a L<Mojo::Snoo::Thing> object.
+Returns a L<Mojo::Snoo::Link> object.
 
 =head2 comment
 
