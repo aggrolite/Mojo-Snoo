@@ -127,6 +127,10 @@ OAuth works, see the L<Quick Start|https://github.com/reddit/reddit/wiki/OAuth2-
 and the L<full documentation|https://github.com/reddit/reddit/wiki/OAuth2>. There is
 also a lot of useful information of the L<redditdev subreddit|http://www.reddit.com/r/redditdev>.
 
+=head1 SEE ALSO
+L<ojo::Snoo>
+=cut
+
 =head1 LICENSE
 
 The (two-clause) FreeBSD License. See LICENSE for details.
