@@ -15,8 +15,6 @@ has id => (
 
 has [qw( author body )] => (is => 'ro');
 
-use Mojo::Util qw(dumper);
-
 has replies => (
     is     => 'rw',
     coerce => sub {
