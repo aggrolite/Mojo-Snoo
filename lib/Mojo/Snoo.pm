@@ -119,6 +119,11 @@ Returns a L<Mojo::Snoo::Comment> object.
 
 Returns a L<Mojo::Snoo::User> object.
 
+=head1 WHY SNOO?
+
+Snoo is reddit's alien mascot. Not to be confused
+with L<snu-snu|https://en.wikipedia.org/wiki/Amazon_Women_in_the_Mood>.
+
 =head1 API DOCUMENTATION
 
 Please see the official L<Reddit API documentation|http://www.reddit.com/dev/api>
