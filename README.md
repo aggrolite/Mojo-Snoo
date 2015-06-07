@@ -79,6 +79,11 @@ Returns a [Mojo::Snoo::Comment](https://metacpan.org/pod/Mojo::Snoo::Comment) ob
 
 Returns a [Mojo::Snoo::User](https://metacpan.org/pod/Mojo::Snoo::User) object.
 
+# WHY SNOO?
+
+Snoo is reddit's alien mascot. Not to be confused
+with [snu-snu](https://en.wikipedia.org/wiki/Amazon_Women_in_the_Mood).
+
 # API DOCUMENTATION
 
 Please see the official [Reddit API documentation](http://www.reddit.com/dev/api)
@@ -86,6 +91,9 @@ for more details regarding the usage of endpoints. For a better idea of how
 OAuth works, see the [Quick Start](https://github.com/reddit/reddit/wiki/OAuth2-Quick-Start-Example)
 and the [full documentation](https://github.com/reddit/reddit/wiki/OAuth2). There is
 also a lot of useful information of the [redditdev subreddit](http://www.reddit.com/r/redditdev).
+
+# SEE ALSO
+[ojo::Snoo](https://metacpan.org/pod/ojo::Snoo)
 
 # LICENSE
 
