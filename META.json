@@ -63,7 +63,9 @@
    },
    "version" : "0.03",
    "x_contributors" : [
-      "Curtis Brandt <curtis@cpan.org>"
+      "Curtis Brandt <curtis@cpan.org>",
+      "Hunter McMillen <mcmillhj@gmail.com>",
+      "Stefan Adams <stefan@borgia.com>"
    ]
 }
 
