@@ -8,7 +8,7 @@ use Mojo::Snoo::Comment;
 
 use constant FIELD => 'name';
 
-has [qw( id name title subreddit )] => (is => 'ro');
+has [qw( id name title author subreddit )] => (is => 'ro');
 
 sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (id => shift) : @_) }
 
