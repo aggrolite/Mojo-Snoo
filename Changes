@@ -1,5 +1,21 @@
 {{$NEXT}}
 
+0.10  2015-06-07 11:54:45 PDT
+    (major)
+    - Add ojo::Snoo
+    - Rename Mojo::Snoo::Thing as Mojo::Snoo::Link
+    - Bring back Mojo::Snoo::Thing as wrapper for “Things" (Hunter McMillen)
+    - Require Mojolicious v5.73
+
+    (minor)
+    - Add author key to Mojo::Snoo::Link
+    - Remove unused Mojo::Util::dumper import
+
+    (docs)
+    - Explain Snoo
+    - Reference ojo::Snoo (Stefan Adams)
+
+
 0.03  2015-06-03 20:13:33 PDT
     - Add Test::Exception as dependency
 

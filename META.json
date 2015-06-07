@@ -61,7 +61,7 @@
          "web" : "https://github.com/aggrolite/Mojo-Snoo"
       }
    },
-   "version" : "0.03",
+   "version" : "0.10",
    "x_contributors" : [
       "Curtis Brandt <curtis@cpan.org>",
       "Hunter McMillen <mcmillhj@gmail.com>",

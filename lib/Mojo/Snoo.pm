@@ -9,7 +9,7 @@ use Mojo::Snoo::Link;
 use Mojo::Snoo::Comment;
 use Mojo::Snoo::User;
 
-our $VERSION = '0.03';
+our $VERSION = '0.10';
 
 has content => (is => 'rw');
 
