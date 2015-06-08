@@ -84,6 +84,9 @@ Returns a [Mojo::Snoo::User](https://metacpan.org/pod/Mojo::Snoo::User) object.
 Snoo is reddit's alien mascot. Not to be confused
 with [snu-snu](https://en.wikipedia.org/wiki/Amazon_Women_in_the_Mood).
 
+Reddit's [licensing changes](https://www.reddit.com/r/redditdev/comments/2ujhkr/important_api_licensing_terms_clarified/)
+prohibit the word "reddit" from being used in the name of reddit API clients.
+
 # API DOCUMENTATION
 
 Please see the official [Reddit API documentation](http://www.reddit.com/dev/api)
