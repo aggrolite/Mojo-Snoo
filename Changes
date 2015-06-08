@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+0.11  2015-06-08 07:27:40 PDT
+    - Explain why Mojo::Reddit was used over Mojo::Snoo
+
 0.10  2015-06-07 11:54:45 PDT
     (major)
     - Add ojo::Snoo
