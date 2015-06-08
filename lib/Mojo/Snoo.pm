@@ -124,6 +124,9 @@ Returns a L<Mojo::Snoo::User> object.
 Snoo is reddit's alien mascot. Not to be confused
 with L<snu-snu|https://en.wikipedia.org/wiki/Amazon_Women_in_the_Mood>.
 
+Reddit's L<licensing changes|https://www.reddit.com/r/redditdev/comments/2ujhkr/important_api_licensing_terms_clarified/>
+prohibit the word "reddit" from being used in the name of reddit API clients.
+
 =head1 API DOCUMENTATION
 
 Please see the official L<Reddit API documentation|http://www.reddit.com/dev/api>
