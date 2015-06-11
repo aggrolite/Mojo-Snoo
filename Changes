@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+0.12  2015-06-11 05:15:51 PDT
+    - Require Moo v2.000001
+
 0.11  2015-06-08 07:27:40 PDT
     - Explain why Mojo::Reddit was used over Mojo::Snoo
 
