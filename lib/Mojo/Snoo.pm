@@ -136,8 +136,8 @@ and the L<full documentation|https://github.com/reddit/reddit/wiki/OAuth2>. Ther
 also a lot of useful information of the L<redditdev subreddit|http://www.reddit.com/r/redditdev>.
 
 =head1 SEE ALSO
+
 L<ojo::Snoo>
-=cut
 
 =head1 LICENSE
 
