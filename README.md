@@ -96,7 +96,10 @@ and the [full documentation](https://github.com/reddit/reddit/wiki/OAuth2). Ther
 also a lot of useful information of the [redditdev subreddit](http://www.reddit.com/r/redditdev).
 
 # SEE ALSO
+
 [ojo::Snoo](https://metacpan.org/pod/ojo::Snoo)
+
+[Mojolicious::Command::snoodoc](https://metacpan.org/pod/Mojolicious::Command::snoodoc)
 
 # LICENSE
 

@@ -139,6 +139,8 @@ also a lot of useful information of the L<redditdev subreddit|http://www.reddit.
 
 L<ojo::Snoo>
 
+L<Mojolicious::Command::snoodoc>
+
 =head1 LICENSE
 
 The (two-clause) FreeBSD License. See LICENSE for details.
