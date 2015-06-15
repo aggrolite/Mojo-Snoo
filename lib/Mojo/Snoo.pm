@@ -64,7 +64,7 @@ scripts, and full-blown applications!
     );
 
     # upvote each post in /r/Perl (casing does not matter)
-    $snoo->subreddit('Perl')->things->each(
+    $snoo->subreddit('Perl')->links->each(
         sub { $_->upvote }
     );
 
@@ -80,16 +80,16 @@ scripts, and full-blown applications!
 
     # print title and author of each post (or "thing") from /r/Perl
     # returns 25 "hot" posts by default
-    Mojo::Snoo::Subreddit->new('Perl')->things->each( sub { say $_->title, ' posted by ', $_->author } );
+    Mojo::Snoo::Subreddit->new('Perl')->links->each( sub { say $_->title, ' posted by ', $_->author } );
 
     # get only self posts
-    @selfies = Mojo::Snoo::Subreddit->new('Perl')->things->grep( sub { $_->is_self } );
+    @selfies = Mojo::Snoo::Subreddit->new('Perl')->links->grep( sub { $_->is_self } );
 
-    # get the top 3 controversial posts ("things") on /r/AskReddit
-    @things = Mojo::Snoo::Subreddit->new('Perl')->things_contro_all(3);
+    # get the top 3 controversial links on /r/AskReddit
+    @links = Mojo::Snoo::Subreddit->new('Perl')->links_contro_all(3);
 
     # print past week's top video URLs from /r/videos
-    Mojo::Snoo::Subreddit->new('Perl')->things_top_week->each( sub { say $_->url } );
+    Mojo::Snoo::Subreddit->new('Perl')->links_top_week->each( sub { say $_->url } );
 
     # print the /r/Perl subreddit description
     say Mojo::Snoo->new->subreddit('Perl')->about->description;
