@@ -8,7 +8,59 @@ use Mojo::Snoo::Comment;
 
 use constant FIELD => 'name';
 
-has [qw( id name title author subreddit )] => (is => 'ro');
+has [
+    qw(
+      approved_by
+      archived
+      author
+      author_flair_css_class
+      author_flair_text
+      banned_by
+      clicked
+      created
+      created_utc
+      distinguished
+      domain
+      downs
+      edited
+      from
+      from_id
+      from_kind
+      gilded
+      hidden
+      id
+      is_self
+      likes
+      link_flair_css_class
+      link_flair_text
+      media
+      media_embed
+      mod_reports
+      name
+      num_comments
+      num_reports
+      over_18
+      permalink
+      removal_reason
+      report_reasons
+      saved
+      score
+      secure_media
+      secure_media_embed
+      selftext
+      selftext_html
+      stickied
+      subreddit
+      subreddit_id
+      suggested_sort
+      thumbnail
+      title
+      ups
+      url
+      user_reports
+      visited
+      )
+] => (is => 'ro');
 
 sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (id => shift) : @_) }
 
