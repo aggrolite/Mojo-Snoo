@@ -47,20 +47,24 @@ sub _build_about {
 }
 
 sub _get_links {
-    my $cb;    # callback optional
-    my ($self, $limit, $sort, $time) = map {    #
-        ref($_) eq 'CODE' && ($cb = $_) ? () : $_;
-    } @_;
+    my $self = shift;
 
     my $path = '/r/' . $self->name;
-    $path .= "/$sort" if $sort;
 
-    my %params;
+    if (my $sort = shift) {
+        $path .= "/$sort";
+    }
 
-    $params{t}     = $time  if $time;
-    $params{limit} = $limit if $limit;
+    # Do we have a callback?
+    my $cb = ref $_[-1] eq 'CODE' ? pop : undef;
 
-    my $res = $self->_do_request('GET', $path, %params);
+    # Did we receive extra endpoint parameters?
+    my $params = ref $_[-1] eq 'HASH' ? pop : {};
+
+    $params->{t} = shift;
+    $params->{limit} ||= shift;
+
+    my $res = $self->_do_request('GET', $path, %$params);
 
     # run callback
     $res->$cb if $cb;
@@ -80,19 +84,19 @@ sub _get_links {
     Mojo::Collection->new(map { Mojo::Snoo::Link->new(%args, %$_) } @children);
 }
 
-sub links              { shift->_get_links(@_                          ) }
-sub links_new          { shift->_get_links(@_, 'new'                   ) }
-sub links_rising       { shift->_get_links(@_, 'rising'                ) }
-sub links_contro       { shift->_get_links(@_, 'controversial'         ) }
-sub links_contro_week  { shift->_get_links(@_, 'controversial', 'week' ) }
-sub links_contro_month { shift->_get_links(@_, 'controversial', 'month') }
-sub links_contro_year  { shift->_get_links(@_, 'controversial', 'year' ) }
-sub links_contro_all   { shift->_get_links(@_, 'controversial', 'all'  ) }
-sub links_top          { shift->_get_links(@_, 'top'                   ) }
-sub links_top_week     { shift->_get_links(@_, 'top', 'week'           ) }
-sub links_top_month    { shift->_get_links(@_, 'top', 'month'          ) }
-sub links_top_year     { shift->_get_links(@_, 'top', 'year'           ) }
-sub links_top_all      { shift->_get_links(@_, 'top', 'all'            ) }
+sub links              { shift->_get_links(''             , ''     , @_) }
+sub links_new          { shift->_get_links('new'          , ''     , @_) }
+sub links_rising       { shift->_get_links('rising'       , ''     , @_) }
+sub links_contro       { shift->_get_links('controversial', ''     , @_) }
+sub links_contro_week  { shift->_get_links('controversial', 'week' , @_) }
+sub links_contro_month { shift->_get_links('controversial', 'month', @_) }
+sub links_contro_year  { shift->_get_links('controversial', 'year' , @_) }
+sub links_contro_all   { shift->_get_links('controversial', 'all'  , @_) }
+sub links_top          { shift->_get_links('top'          , ''     , @_) }
+sub links_top_week     { shift->_get_links('top'          , 'week' , @_) }
+sub links_top_month    { shift->_get_links('top'          , 'month', @_) }
+sub links_top_year     { shift->_get_links('top'          , 'year' , @_) }
+sub links_top_all      { shift->_get_links('top'          , 'all'  , @_) }
 
 1;
 
@@ -172,9 +176,23 @@ L<Mojo::Snoo::Link> objects.
 
     GET /r/$subreddit
 
-Accepts one argument which indicates the maximum number of
-Links (reddit API's limit parameter). Default is 25, max
-is 100.
+Accepts arguments for limit, API endpoint parameters, and
+a callback (in that order). The default limit is 25 and
+cannot be greater than 100. Callback receives a
+L<Mojo::Message::Response> object.
+
+    Mojo::Snoo::Subreddit-new('perl')->links;
+    Mojo::Snoo::Subreddit-new('perl')->links(20);
+    Mojo::Snoo::Subreddit->new('pics')->links_top(
+        50 => {after => 't3_92dd8'} => sub {
+            my $res = shift;
+            say 'Response code: ' . $res->code;
+        }
+      )->each(
+        sub {
+            say $_->title;
+        }
+      );
 
 =head2 links_new
 
