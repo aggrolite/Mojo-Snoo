@@ -1,4 +1,4 @@
-requires Mojolicious => 5.73;
+requires Mojolicious => 6.0;
 requires Moo         => 2.000001;
 
 on test => sub {
