@@ -7,7 +7,15 @@ use Mojo::Util ();
 
 use Carp ();
 
-has base_url => (is => 'rw', default => 'http://www.reddit.com');
+has agent => (
+    is      => 'rw',
+    default => sub { Mojo::UserAgent->new() }
+);
+
+has base_url => (
+    is      => 'rw',
+    default => sub { Mojo::URL->new('https://www.reddit.com') }
+);
 
 has [qw(username password client_id client_secret)] => (is => 'ro', predicate => 1);
 
@@ -38,7 +46,7 @@ sub _create_access_token {
       . $self->client_secret
       . '@www.reddit.com/api/v1/access_token';
 
-    my $res = Mojo::UserAgent->new->post($access_url => form => \%form)->res->json;
+    my $res = $self->agent->post($access_url => form => \%form)->res->json;
 
     # if a problem arises, it is most likely due to given auth being incorrect
     # let the user know in this case
@@ -51,7 +59,7 @@ sub _create_access_token {
     }
 
     # update the base URL for future endpoint calls
-    $self->base_url('https://oauth.reddit.com');
+    $self->base_url->host('oauth.reddit.com');
 
     # TODO we will want to eventually keep track of token type, scope and expiration
     #      when dealing with user authentication (not just a personal script)
@@ -107,16 +115,15 @@ sub _do_request {
         $headers{Authorization} = 'bearer ' . $self->access_token;
     }
 
-    my $agent = Mojo::UserAgent->new();
-    my $url   = Mojo::URL->new($self->base_url);
+    my $url = $self->base_url;
 
     $url->path("$path.json");
 
     if ($method eq 'GET') {
         $url->query(%params) if %params;
-        return $agent->get($url => \%headers)->res;
+        return $self->agent->get($url => \%headers)->res;
     }
-    return $agent->post($url => \%headers, form => \%params)->res;
+    return $self->agent->post($url => \%headers, form => \%params)->res;
 }
 
 sub _create_object {
