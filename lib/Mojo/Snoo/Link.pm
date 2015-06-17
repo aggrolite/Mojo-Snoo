@@ -60,7 +60,7 @@ has [
       user_reports
       visited
       )
-] => (is => 'ro');
+] => (is => 'ro', predicate => 1);
 
 sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (id => shift) : @_) }
 
