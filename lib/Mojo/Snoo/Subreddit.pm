@@ -61,7 +61,9 @@ sub _get_links {
     # Did we receive extra endpoint parameters?
     my $params = ref $_[-1] eq 'HASH' ? pop : {};
 
-    $params->{t} = shift;
+    # Define these from special method calls unless
+    #   user has already done so via the params hash
+    $params->{t}     ||= shift;
     $params->{limit} ||= shift;
 
     my $res = $self->_do_request('GET', $path, %$params);
