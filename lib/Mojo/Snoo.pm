@@ -63,27 +63,23 @@ scripts, and full-blown applications!
         client_secret => 'very_secret_oauth',
     );
 
-    # upvote each post in /r/Perl (casing does not matter)
-    $snoo->subreddit('Perl')->links->each(
-        sub { $_->upvote }
-    );
-
-    # Don't want to login? That's fine.
-    # You can stick to methods which don't require login.
-    # Omitting auth details is nice for one-liners:
+    # upvote first 10 posts from /r/perl after a specific post ID
+    $snoo->subreddit('perl')->links(
+        10 => {after => 't3_39ziem'} => sub {
+            say shift->code;    # callback receives Mojo::Message::Response
+        }
+    )->each(sub { $_->upvote });
 
     # print names of moderators from /r/Perl
+    # Warning: mods() is subject to change!
     Mojo::Snoo->new->subreddit('Perl')->mods->each( sub { say $_->name } );
 
-    # or do the same via Mojo::Snoo::Subreddit
+    # Print moderators via Mojo::Snoo::Subreddit
     Mojo::Snoo::Subreddit->new('Perl')->mods->each( sub { say $_->name } );
 
-    # print title and author of each post (or "thing") from /r/Perl
-    # returns 25 "hot" posts by default
-    Mojo::Snoo::Subreddit->new('Perl')->links->each( sub { say $_->title, ' posted by ', $_->author } );
-
-    # get only self posts
-    @selfies = Mojo::Snoo::Subreddit->new('Perl')->links->grep( sub { $_->is_self } );
+    # print title and author of the newest "self" posts from /r/perl
+    Mojo::Snoo::Subreddit->new('Perl')->links_new(50)->grep(sub { $_->is_self })
+      ->each(sub { say $_->title, ' posted by ', $_->author });
 
     # get the top 3 controversial links on /r/AskReddit
     @links = Mojo::Snoo::Subreddit->new('Perl')->links_contro_all(3);
