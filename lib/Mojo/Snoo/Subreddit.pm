@@ -63,8 +63,8 @@ sub _get_links {
 
     # Define these from special method calls unless
     #   user has already done so via the params hash
-    $params->{t}     ||= shift;
-    $params->{limit} ||= shift;
+    $params->{t}     ||= shift || '';
+    $params->{limit} ||= shift || '';
 
     my $res = $self->_do_request('GET', $path, %$params);
 
