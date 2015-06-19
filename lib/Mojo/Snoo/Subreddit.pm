@@ -16,17 +16,18 @@ has name => (
     required => 1
 );
 
-has about => (is => 'ro', lazy => 1, builder => '_build_about');
-has mods  => (is => 'ro', lazy => 1, builder => '_build_mods');
-
 sub BUILDARGS { shift->SUPER::BUILDARGS(@_ == 1 ? (name => shift) : @_) }
 
-sub _build_mods {
+sub mods {
     my $self = shift;
     my $path = '/r/' . $self->name . '/about/moderators';
-    my $json = $self->_do_request('GET', $path);
+    my $res = $self->_do_request('GET', $path);
 
-    my @mods = @{$json->{data}{children}};
+    # Do we have a callback?
+    my $cb = ref $_[-1] eq 'CODE' ? pop : undef;
+    $res->$cb if $cb;
+
+    my @mods = @{$res->json->{data}{children}};
 
     # FIXME should we return User objects instead? or combined?
     my @collection;
@@ -37,13 +38,17 @@ sub _build_mods {
     Mojo::Collection->new(@collection);
 }
 
-sub _build_about {
+sub about {
     my $self = shift;
     my $path = '/r/' . $self->name . '/about';
-    my $json = $self->_do_request('GET', $path);
+    my $res = $self->_do_request('GET', $path);
+
+    # Do we have a callback?
+    my $cb = ref $_[-1] eq 'CODE' ? pop : undef;
+    $res->$cb if $cb;
 
     my $pkg = 'Mojo::Snoo::Subreddit::About::' . $self->name;
-    $self->_monkey_patch($pkg, $json->{data});
+    $self->_monkey_patch($pkg, $res->json->{data});
 }
 
 sub _get_links {
