@@ -1,5 +1,10 @@
 {{$NEXT}}
 
+0.13  2015-07-06 13:50:13 PDT
+    - Run callbacks for most methods doing HTTP requests
+    - Better documentation
+    - More test coverage
+
 0.12  2015-06-11 05:15:51 PDT
     - Require Moo v2.000001
 
