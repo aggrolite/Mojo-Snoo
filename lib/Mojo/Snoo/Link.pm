@@ -172,6 +172,8 @@ L<Mojo::Snoo::Comment> objects.
 
     GET /r/$subreddit/comments/article
 
+Accepts arguments for limit and callback (in that order).
+
 =head1 API DOCUMENTATION
 
 Please see the official L<Reddit API documentation|http://www.reddit.com/dev/api>
