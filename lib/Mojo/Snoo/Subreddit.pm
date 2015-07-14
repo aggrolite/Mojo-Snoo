@@ -51,6 +51,22 @@ sub about {
     $self->_monkey_patch($pkg, $res->json->{data});
 }
 
+sub _toggle_subscribe {
+    my ($self, $action) = @_;
+
+    # Calling $self->about feels like a hack
+    # However, a request is needed to get the t5_ name of a subreddit
+    my %params = (action => $action, sr => $self->about->name);
+
+    my $res = $self->_do_request('POST', '/api/subscribe', %params);
+
+    my $cb = ref $_[-1] eq 'CODE' ? pop : undef;
+    $res->$cb if $cb;
+}
+
+sub subscribe   { shift->_toggle_subscribe('sub',   @_) }
+sub unsubscribe { shift->_toggle_subscribe('unsub', @_) }
+
 sub _get_links {
     my $self = shift;
 
