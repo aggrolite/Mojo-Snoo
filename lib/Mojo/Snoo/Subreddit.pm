@@ -289,6 +289,18 @@ Like L</links_contro> but from all time.
 
     GET /r/$subreddit/controversial?t=all
 
+=head2 subscribe
+
+Subscribe to subreddit. Accepts callback.
+
+    POST /api/subscribe
+
+=head2 unsubscribe
+
+Unsubscribe from subreddit. Accepts callback.
+
+    POST /api/subscribe
+
 =head1 API DOCUMENTATION
 
 Please see the official L<Reddit API documentation|http://www.reddit.com/dev/api>
