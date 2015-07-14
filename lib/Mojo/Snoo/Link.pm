@@ -101,7 +101,7 @@ sub _vote {
 
     my %params = (
         dir => $direction,
-	id => $self->name,
+        id  => $self->name,
     );
 
     $self->_do_request('POST', '/api/vote', %params);
