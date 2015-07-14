@@ -27,6 +27,8 @@ my @subs = (
       links_top_month
       links_top_year
       links_top_all
+      subscribe
+      unsubscribe
       )
 );
 diag(q@Checking can_ok for Mojo::Snoo::Subreddit's methods@);
