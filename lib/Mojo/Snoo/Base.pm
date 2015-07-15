@@ -30,6 +30,7 @@ my %TOKEN_REQUIRED = map { $_ => 1 } (
       /api/new_captcha
       /api/compose
       /api/subscribe
+      /api/submit
       )
 );
 

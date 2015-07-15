@@ -67,6 +67,28 @@ sub _toggle_subscribe {
 sub subscribe   { shift->_toggle_subscribe('sub',   @_) }
 sub unsubscribe { shift->_toggle_subscribe('unsub', @_) }
 
+sub _submit {
+    my $cb     = ref $_[-1] eq 'CODE' ? pop : undef;
+    my $params = ref $_[-1] eq 'HASH' ? pop : {};
+
+    my ($self, $kind, $title, $content) = @_;
+
+    my $post_type = $kind eq 'self' ? 'text' : 'url';
+    $params->{$post_type} = $content;
+
+    $params->{title}  //= $title // '';
+    $params->{sr}       = $self->name;
+    $params->{api_type} = 'json';
+    $params->{kind}     = $kind;
+
+    my $res = $self->_do_request('POST', '/api/submit', %$params);
+
+    $res->$cb if $cb;
+}
+
+sub submit_link { shift->_submit('link', @_) }
+sub submit_text { shift->_submit('self', @_) }
+
 sub _get_links {
     my $self = shift;
 
