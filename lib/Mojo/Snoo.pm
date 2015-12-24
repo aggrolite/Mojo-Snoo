@@ -139,4 +139,6 @@ L<Mojolicious::Command::snoodoc>
 
 =head1 LICENSE
 
+Copyright (C) 2015 by Curtis Brandt
+
 The (two-clause) FreeBSD License. See LICENSE for details.

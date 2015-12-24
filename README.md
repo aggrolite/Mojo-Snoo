@@ -99,4 +99,6 @@ also a lot of useful information of the [redditdev subreddit](http://www.reddit.
 
 # LICENSE
 
+Copyright (C) 2015 by Curtis Brandt
+
 The (two-clause) FreeBSD License. See LICENSE for details.
