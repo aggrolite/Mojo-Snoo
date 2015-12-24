@@ -1,32 +1,32 @@
 {
    "abstract" : "Mojo wrapper for the Reddit API",
    "author" : [
-      "unknown"
+      "Curtis Brandt"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.037, Dist::Milla version v1.0.15, CPAN::Meta::Converter version 2.150001",
+   "generated_by" : "Dist::Zilla version 5.041, Dist::Milla version v1.0.15, CPAN::Meta::Converter version 2.150001",
    "license" : [
       "freebsd"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-      "version" : 2
+      "version" : "2"
    },
    "name" : "Mojo-Snoo",
    "no_index" : {
       "directory" : [
-         "t",
-         "xt",
+         "eg",
+         "examples",
          "inc",
          "share",
-         "eg",
-         "examples"
+         "t",
+         "xt"
       ]
    },
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "Module::Build::Tiny" : "0.007"
+            "Module::Build::Tiny" : "0.034"
          }
       },
       "develop" : {
@@ -61,7 +61,7 @@
          "web" : "https://github.com/aggrolite/Mojo-Snoo"
       }
    },
-   "version" : "0.14",
+   "version" : "0.15",
    "x_contributors" : [
       "Curtis Brandt <curtis@cpan.org>",
       "Hunter McMillen <mcmillhj@gmail.com>",
